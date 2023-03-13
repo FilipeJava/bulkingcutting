@@ -51,6 +51,37 @@ public class DadosUser {
         this.altura = altura;
     }
 
+
+    public String getNome() {
+        return nome;
+    }
+
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+
+    public Objetivo getObjetivo() {
+        return objetivo;
+    }
+
+
+    public BigDecimal getPeso() {
+        return peso;
+    }
+
+
+    public Integer getAltura() {
+        return altura;
+    }
+
+    
     
     
     

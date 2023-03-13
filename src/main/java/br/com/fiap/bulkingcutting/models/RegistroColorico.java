@@ -5,15 +5,15 @@ import java.time.LocalDate;
 
 public class RegistroColorico {
 
-    private Tipo tipo;
-    private String descriçãvateo;
+    private Tipo tipo; // Enum momentaneo 
+    private String descricao;
     private LocalDate data;
     private BigDecimal calorias;
 
 
-    public RegistroColorico(Tipo tipo, String descriçãvateo, LocalDate data, BigDecimal calorias) {
+    public RegistroColorico(Tipo tipo, String descricao, LocalDate data, BigDecimal calorias) {
         this.tipo = tipo;
-        this.descriçãvateo = descriçãvateo;
+        this.descricao = descricao;
         this.data = data;
         this.calorias = calorias;
     }
@@ -24,8 +24,8 @@ public class RegistroColorico {
     }
 
 
-    public String getDescriçãvateo() {
-        return descriçãvateo;
+    public String getDescricao() {
+        return descricao;
     }
 
 
@@ -37,6 +37,29 @@ public class RegistroColorico {
     public BigDecimal getCalorias() {
         return calorias;
     }
+
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
+
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+
+    public void setCalorias(BigDecimal calorias) {
+        this.calorias = calorias;
+    }
+
+
+   
 
 
     
