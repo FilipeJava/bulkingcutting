@@ -43,7 +43,7 @@ Uma API para controle de calorias consumidas e gastas
 | nome  | String  | sim  | O nome do Usuário   |
 | idade  | int  | sim  | a idade do usuário  |
 | sexo_id  | int | sim  | o id previamente  cadastrado no sistema  |
-|objetivo|int|sim|o id previamente  cadastrado no sistema  |
+|objetivo_id|int|sim|o id previamente  cadastrado no sistema  |
 | peso  | float  | sim  | o peso do usuário(kg) |
 | altura  | int  | sim  | a altura em cm   |
 
@@ -62,9 +62,19 @@ Uma API para controle de calorias consumidas e gastas
 ```
 **Respostas**
 
+
+`POST`
+
 | código| descrição
 |-------|----------
 | 201   | dados cadastrados com sucesso
+| 400   | campos inválidos
+
+`PUT`
+
+| código| descrição
+|-------|----------
+| 200  | dados atualizados com sucesso
 | 400   | campos inválidos
 
 # Mostrar Detalhes Dados/GETALL
@@ -125,9 +135,9 @@ Uma API para controle de calorias consumidas e gastas
  | Campo  | Tipo | Obrigatório  | Descrição|
 | ------------- | ------------- | ------------- | ------------- | 
 | tipo  | int  | sim  | o id previamente  cadastrado no sistema   |
-| descrição  | String  | sim  | descrição ref. tipo  |
+| descricao  | String  | sim  | descrição ref. tipo  |
 | data | date | sim  | data do registro  |
-|Calorias|float|sim| quantidade de calorias  |
+|calorias|float|sim| quantidade de calorias Kcal  |
 
 
   **Exemplo de corpo de requisição**
@@ -136,7 +146,7 @@ Uma API para controle de calorias consumidas e gastas
 
 {
  tipo_id: 1,
- descrição:"Natação",
+ descricao:"Natação",
  data: 2023-06-03 11:59:32,
  caloria:128.85,
  
@@ -155,7 +165,7 @@ Uma API para controle de calorias consumidas e gastas
 
 | código| descrição
 |-------|----------
-| 201   | registro calórico  cadastrados com sucesso
+| 200   | registro calórico  atualizado  com sucesso
 | 400   | campos inválidos
 
 # Mostrar Detalhes Registro Calórico /GETALL
@@ -202,7 +212,7 @@ Uma API para controle de calorias consumidas e gastas
 
 | código| descrição
 |-------|----------
-| 200   | Registro Cálorico retornados
+| 204  | Registro Cálorico Deletado
 | 404   | não existe dados para id informado
 
 
