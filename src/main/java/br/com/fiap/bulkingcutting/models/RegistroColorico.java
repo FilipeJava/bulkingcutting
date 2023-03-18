@@ -5,13 +5,17 @@ import java.time.LocalDate;
 
 public class RegistroColorico {
 
+    private Long id;
     private Tipo tipo; // Enum momentaneo 
     private String descricao;
     private LocalDate data;
     private BigDecimal calorias;
 
+    
 
-    public RegistroColorico(Tipo tipo, String descricao, LocalDate data, BigDecimal calorias) {
+
+    public RegistroColorico(Long id, Tipo tipo, String descricao, LocalDate data, BigDecimal calorias) {
+        this.id = id;
         this.tipo = tipo;
         this.descricao = descricao;
         this.data = data;
@@ -57,6 +61,18 @@ public class RegistroColorico {
     public void setCalorias(BigDecimal calorias) {
         this.calorias = calorias;
     }
+
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    
 
 
    

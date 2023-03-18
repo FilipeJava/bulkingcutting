@@ -30,9 +30,9 @@ Uma API para controle de calorias consumidas e gastas
 ## Cadastrar Dados /Altera Dados
 
 
-  `POST`   /cuttingbulking/api/dados
+  `POST`   /bulkingcutting/api/dados
 
-  `PUT`   /cuttingbulking/api/dados/{id}
+  `P/api/daUT`   /bulkingcutting/api/dados/{id}
 
   
 
@@ -40,8 +40,11 @@ Uma API para controle de calorias consumidas e gastas
 
  | Campo  | Tipo | Obrigatório  | Descrição|
 | ------------- | ------------- | ------------- | ------------- | 
+| id  | int  | sim  | Pk nome do Usuário   |
 | nome  | String  | sim  | O nome do Usuário   |
 | idade  | int  | sim  | a idade do usuário  |
+| email  | String  | sim  | O email do Usuário   |
+| senha  | String  | sim  | a senha do Usuário   |
 | sexo_id  | int | sim  | o id previamente  cadastrado no sistema  |
 |objetivo_id|int|sim|o id previamente  cadastrado no sistema  |
 | peso  | float  | sim  | o peso do usuário(kg) |
@@ -52,8 +55,11 @@ Uma API para controle de calorias consumidas e gastas
 ```JS
 
 {
+ id:1 
  nome: "Fred Franklin ford",
  idade:32,
+ email:"fred@gmail.com.br",
+ senha:"mjshdkjs@44",
  sexo_id: 2,
  objetivo_id:1,
  peso:88.8,
@@ -80,9 +86,9 @@ Uma API para controle de calorias consumidas e gastas
 # Mostrar Detalhes Dados/GETALL
 
 
-  `GET-ID`   /cuttingbulking/api/dados/{id}
+  `GET-ID`   /bulkingcutting/api/dados/{id}
 
-  `GET-ALL`   /cuttingbulking/api/dados/
+  `GET-ALL`   /bulkingcutting/api/dados/
 
   
 

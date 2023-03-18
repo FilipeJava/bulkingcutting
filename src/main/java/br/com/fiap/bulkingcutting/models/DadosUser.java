@@ -4,23 +4,31 @@ import java.math.BigDecimal;
 
 public class DadosUser {
 
+    private Long id;
     private String nome;
     private Integer idade;
+    private String email;
+    private String senha;
     private Sexo sexo;
     private Objetivo objetivo;
     private BigDecimal peso;
     private Integer altura;
-
-
-    public DadosUser(String nome, Integer idade, Sexo sexo, Objetivo objetivo, BigDecimal peso, Integer altura) {
+    
+    public DadosUser(Long id, String nome, Integer idade, String email, String senha, Sexo sexo, Objetivo objetivo,
+            BigDecimal peso, Integer altura) {
+        this.id = id;
         this.nome = nome;
         this.idade = idade;
+        this.email = email;
+        this.senha = senha;
         this.sexo = sexo;
         this.objetivo = objetivo;
         this.peso = peso;
         this.altura = altura;
     }
 
+
+    
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -79,6 +87,60 @@ public class DadosUser {
 
     public Integer getAltura() {
         return altura;
+    }
+
+
+
+
+
+
+    public Long getId() {
+        return id;
+    }
+
+
+
+
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
+
+
+
+    public String getEmail() {
+        return email;
+    }
+
+
+
+
+
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+
+
+
+
+    public String getSenha() {
+        return senha;
+    }
+
+
+
+
+
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     
