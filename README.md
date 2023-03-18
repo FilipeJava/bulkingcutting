@@ -128,9 +128,9 @@ Uma API para controle de calorias consumidas e gastas
 ## Cadastrar Registro Calórico/Altera Registro Calórico
 
 
-  `POST`   /cuttingbulking/api/registrocalorico
+  `POST`   /bulkingcutting/api/registrocalorico
 
-  `PUT`   /cuttingbulking/api/registrocalorico/{id}
+  `PUT`   /bulkingcutting/api/registrocalorico/{id}
 
 
 
@@ -177,9 +177,9 @@ Uma API para controle de calorias consumidas e gastas
 # Mostrar Detalhes Registro Calórico /GETALL
 
 
-  `GET`   /cuttingbulking/api/registrocalorico/{id}
+  `GET`   /bulkingcutting/api/registrocalorico/{id}
 
-  `GETALL`   /cuttingbulking/api/registrocalorico/
+  `GETALL`   /bulkingcutting/api/registrocalorico/
 
   
 
@@ -213,7 +213,7 @@ Uma API para controle de calorias consumidas e gastas
 
 
 
-`DELETE`   /cuttingbulking/api/registrocalorico/{id}
+`DELETE`   /bulkingcutting/api/registrocalorico/{id}
 
 
 | código| descrição
@@ -227,15 +227,15 @@ Uma API para controle de calorias consumidas e gastas
 
  **Filtro por Tipos de Atividades**
 
-`GET`   /cuttingbulking/api/registrocalorico?tipo={id}
+`GET`   /bulkingcutting/api/registrocalorico?tipo={id}
 
 
 ----------------------------------------------------------------
 
 **Filtro por datas**
-`GET`   /cuttingbulking/api/registrocalorico?data="today"
+`GET`   /bulkingcutting/api/registrocalorico?data="today"
 
-`GET`   /cuttingbulking/api/registrocalorico?data="yesterday"
+`GET`   /bulkingcutting/api/registrocalorico?data="yesterday"
 
 `GET`   /cuttingbulking/api/registrocalorico?data="week"
 
