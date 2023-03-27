@@ -237,11 +237,11 @@ Uma API para controle de calorias consumidas e gastas
 
 `GET`   /bulkingcutting/api/registrocalorico?data="yesterday"
 
-`GET`   /cuttingbulking/api/registrocalorico?data="week"
+`GET`   /bulkingcutting/api/registrocalorico?data="week"
 
-`GET`   /cuttingbulking/api/registrocalorico?data="month"
+`GET`   /bulkingcutting/api/registrocalorico?data="month"
 
-`GET`   /cuttingbulking/api/registrocalorico?data="year"
+`GET`   /bulkingcutting/api/registrocalorico?data="year"
 
 
      
