@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.bulkingcutting.models.RegistroCalorico;
+import br.com.fiap.bulkingcutting.repository.RegistroCaloricoRepository;
 
 @RestController
 public class RegistroCaloricoController {
@@ -24,43 +26,47 @@ public class RegistroCaloricoController {
 
     List<RegistroCalorico> registroCaloricoList = new ArrayList<RegistroCalorico>();
 
+    @Autowired
+    RegistroCaloricoRepository registroCaloricoRepository;
+
     @GetMapping("/bulkingcutting/api/registrocalorico")
     public List<RegistroCalorico> getRegistroCalorico() {
         log.info("Todos os registros de calorias");
-        return registroCaloricoList;
+        return registroCaloricoRepository.findAll();
     }
 
     @GetMapping("/bulkingcutting/api/registrocalorico/{id}")
     public ResponseEntity<RegistroCalorico> getRegistroCaloricoById(@PathVariable Long id) {
         log.info("Registro de calorias do Usuário" + id + "econtrado");
 
-        var registroCalorico = registroCaloricoList.stream().filter(registro -> registro.getId().equals(id))
-                .findFirst();
+        var registroCalorico = registroCaloricoRepository.findById(id);
+
         if (registroCalorico.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(registroCalorico.get());
     }
 
     @PostMapping("/bulkingcutting/api/registrocalorico")
-    public ResponseEntity postRegistroCalorico(@RequestBody RegistroCalorico registroCalorico) {
+    public ResponseEntity<RegistroCalorico> postRegistroCalorico(@RequestBody RegistroCalorico registroCalorico) {
         log.info("Cadastro do registro de calorias");
-        registroCalorico.setId((long) registroCaloricoList.size() + 1);
-        this.registroCaloricoList.add(registroCalorico);
+
+        registroCaloricoRepository.save(registroCalorico);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(registroCalorico);
     }
 
     @DeleteMapping("/bulkingcutting/api/registrocalorico/{id}")
-    public ResponseEntity deleteRegistroCalorico(@PathVariable Long id) {
+    public ResponseEntity<RegistroCalorico> deleteRegistroCalorico(@PathVariable Long id) {
         log.info("Exclusão do registro de calorias");
-        var registroCalorico = registroCaloricoList.stream().filter(registro -> registro.getId().equals(id))
-                .findFirst();
+        var registroCalorico = registroCaloricoRepository.findById(id);
+
         if (registroCalorico.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.notFound().build();
         }
-        registroCaloricoList.remove(registroCalorico.get());
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        registroCaloricoRepository.delete(registroCalorico.get());
+        return ResponseEntity.noContent().build();
 
     }
 
@@ -69,17 +75,15 @@ public class RegistroCaloricoController {
             @RequestBody RegistroCalorico registroCalorico) {
         log.info("Atualização do registro de calorias");
 
-        var registroCaloricoAtual = registroCaloricoList.stream().filter(registro -> registro.getId().equals(id))
-                .findFirst();
+        var registroCaloricoAtual = registroCaloricoRepository.findById(id);
         if (registroCaloricoAtual.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.notFound().build();
         }
 
-        registroCaloricoList.remove(registroCaloricoAtual.get());
         registroCalorico.setId(id);
-        registroCaloricoList.add(registroCalorico);
+        registroCaloricoRepository.save(registroCalorico);
 
-        return ResponseEntity.status(HttpStatus.OK).body(registroCalorico);
+        return ResponseEntity.ok().body(registroCalorico);
 
     }
 

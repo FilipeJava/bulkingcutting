@@ -3,13 +3,36 @@ package br.com.fiap.bulkingcutting.models;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+
+@Entity
 public class RegistroCalorico {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Enumerated(EnumType.STRING)
     private Tipo tipo; // Enum momentaneo
+    
+
     private String descricao;
+
+    
     private LocalDate data;
+
     private BigDecimal calorias;
+
+
+    public RegistroCalorico() {
+    }
+
 
     public RegistroCalorico(Long id, Tipo tipo, String descricao, LocalDate data, BigDecimal calorias) {
         this.id = id;

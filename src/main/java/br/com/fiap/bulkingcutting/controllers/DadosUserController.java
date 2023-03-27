@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.bulkingcutting.models.DadosUser;
+import br.com.fiap.bulkingcutting.repository.DadosUserRepository;
 
 @RestController
 public class DadosUserController {
@@ -24,19 +26,22 @@ public class DadosUserController {
 
     List<DadosUser> dadosUserList = new ArrayList<DadosUser>();
 
+    @Autowired
+    DadosUserRepository dadosUserRepository;
+
     @GetMapping("/bulkingcutting/api/dados")
-    public List<DadosUser> getDadosUser() {
+        public List<DadosUser> getDadosUser() {
         log.info("Todos os dados dos Usuários");
-        return dadosUserList;
+        return dadosUserRepository.findAll();
     }
 
     @GetMapping("/bulkingcutting/api/dados/{id}")
     public ResponseEntity<DadosUser> getDadosUserById(@PathVariable Long id) {
         log.info("Dados do Usuário" + id + "econtrado");
 
-        var dadosUser = dadosUserList.stream().filter(dados -> dados.getId().equals(id)).findFirst();
+        var dadosUser = dadosUserRepository.findById(id);
         if (dadosUser.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(dadosUser.get());
@@ -44,36 +49,39 @@ public class DadosUserController {
     }
 
     @PostMapping("/bulkingcutting/api/dados")
-    public ResponseEntity postDadosUser(@RequestBody DadosUser dadosUser) {
+    public ResponseEntity<DadosUser> postDadosUser(@RequestBody DadosUser dadosUser) {
         log.info("Cadastro do Usuário");
-        dadosUser.setId((long) dadosUserList.size() + 1);
-        this.dadosUserList.add(dadosUser);
+        
+        dadosUserRepository.save(dadosUser);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(dadosUser);
     }
 
     @DeleteMapping("/bulkingcutting/api/dados/{id}")
-    public ResponseEntity deleteDadosUser(@PathVariable Long id) {
+    public ResponseEntity<DadosUser> deleteDadosUser(@PathVariable Long id) {
         log.info("Deletando o Usuário" + id);
-        var dadosUser = dadosUserList.stream().filter(dados -> dados.getId().equals(id)).findFirst();
+        var dadosUser = dadosUserRepository.findById(id);
         if (dadosUser.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.notFound().build();
         }
-        dadosUserList.remove(dadosUser.get());
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        dadosUserRepository.delete(dadosUser.get());
+
+        return ResponseEntity.noContent().build();
 
     }
 
     @PutMapping("/bulkingcutting/api/dados/{id}")
     public ResponseEntity<DadosUser> putDadosUser(@PathVariable Long id, @RequestBody DadosUser dadosUser) {
         log.info("Atualizando o Usuário" + id);
-        var dadosFilter = dadosUserList.stream().filter(dados -> dados.getId().equals(id)).findFirst();
+
+        var dadosFilter = dadosUserRepository.findById(id);
         if (dadosFilter.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.notFound().build();
         }
         dadosUserList.remove(dadosFilter.get());
         dadosUser.setId(id);
-        dadosUserList.add(dadosUser);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        dadosUserRepository.save(dadosUser);
+        return ResponseEntity.ok().body(dadosUser);
 
     }
 }

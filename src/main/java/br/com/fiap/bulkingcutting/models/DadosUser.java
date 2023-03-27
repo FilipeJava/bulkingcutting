@@ -2,17 +2,34 @@ package br.com.fiap.bulkingcutting.models;
 
 import java.math.BigDecimal;
 
-public class DadosUser {
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+
+@Entity
+public class DadosUser {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
     private Integer idade;
     private String email;
     private String senha;
+    @Enumerated(EnumType.STRING)
     private Sexo sexo;
+    @Enumerated(EnumType.STRING)
     private Objetivo objetivo;
     private BigDecimal peso;
     private Integer altura;
+
+
+    public DadosUser() {
+    }
 
     public DadosUser(Long id, String nome, Integer idade, String email, String senha, Sexo sexo, Objetivo objetivo,
             BigDecimal peso, Integer altura) {
