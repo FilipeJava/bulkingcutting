@@ -8,23 +8,47 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
 public class DadosUser {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String nome;
+
+    @NotNull
+    @Min(value = 0, message = "Valor mínimo de idade é 0")
     private Integer idade;
+
+    @NotBlank
+    @Email    
     private String email;
+
+    @NotBlank
     private String senha;
+
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Sexo sexo;
+
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Objetivo objetivo;
+
+    @NotNull
+    @Min(value = 0, message = "Valor mínimo de peso é 0")
     private BigDecimal peso;
+
+    @NotNull
+    @Min(value = 0, message = "Valor mínimo de peso é 0")
     private Integer altura;
 
 
@@ -115,5 +139,14 @@ public class DadosUser {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "DadosUser [altura=" + altura + ", email=" + email + idade + ", nome=" + nome
+                + ", objetivo=" + objetivo + ", peso=" + peso + ", sexo=" + sexo+"]";
+    }
+
 
 }

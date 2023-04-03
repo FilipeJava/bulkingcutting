@@ -9,7 +9,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class RegistroCalorico {
@@ -17,22 +20,24 @@ public class RegistroCalorico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Enumerated(EnumType.STRING)
-    private Tipo tipo; // Enum momentaneo
-    
 
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Tipo tipo; // Enum momentaneo
+
+    @NotBlank
+    @Size(min = 5, max = 100)
     private String descricao;
 
-    
+    @NotNull
     private LocalDate data;
 
+    @NotNull
+    @Min(value = 0, message = "Valor mínimo de calorias é 0")
     private BigDecimal calorias;
-
 
     public RegistroCalorico() {
     }
-
 
     public RegistroCalorico(Long id, Tipo tipo, String descricao, LocalDate data, BigDecimal calorias) {
         this.id = id;
@@ -80,6 +85,13 @@ public class RegistroCalorico {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "RegistroCalorico [calorias=" + calorias + ", data=" + data + ", descricao=" + descricao + ", id=" + id
+                + ", tipo=" + tipo + "]";
     }
 
 }

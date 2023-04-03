@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fiap.bulkingcutting.exception.RestNotFoundException;
 import br.com.fiap.bulkingcutting.models.RegistroCalorico;
 import br.com.fiap.bulkingcutting.repository.RegistroCaloricoRepository;
+import jakarta.validation.Valid;
 
 @RestController
+@RequestMapping("/bulkingcutting/api/registrocalorico")
 public class RegistroCaloricoController {
 
     Logger log = LoggerFactory.getLogger(RegistroCaloricoController.class);
@@ -29,27 +33,22 @@ public class RegistroCaloricoController {
     @Autowired
     RegistroCaloricoRepository registroCaloricoRepository;
 
-    @GetMapping("/bulkingcutting/api/registrocalorico")
+    @GetMapping
     public List<RegistroCalorico> getRegistroCalorico() {
         log.info("Todos os registros de calorias");
         return registroCaloricoRepository.findAll();
     }
 
-    @GetMapping("/bulkingcutting/api/registrocalorico/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<RegistroCalorico> getRegistroCaloricoById(@PathVariable Long id) {
-        log.info("Registro de calorias do Usuário" + id + "econtrado");
-
-        var registroCalorico = registroCaloricoRepository.findById(id);
-
-        if (registroCalorico.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(registroCalorico.get());
+        log.info("Buscando de calorias do Usuário" + id);
+        var registroCalorico = getRegistro(id);
+        return ResponseEntity.ok(registroCalorico);
     }
 
-    @PostMapping("/bulkingcutting/api/registrocalorico")
-    public ResponseEntity<RegistroCalorico> postRegistroCalorico(@RequestBody RegistroCalorico registroCalorico) {
+    @PostMapping
+    public ResponseEntity<RegistroCalorico> postRegistroCalorico(
+            @RequestBody @Valid RegistroCalorico registroCalorico) {
         log.info("Cadastro do registro de calorias");
 
         registroCaloricoRepository.save(registroCalorico);
@@ -57,34 +56,32 @@ public class RegistroCaloricoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(registroCalorico);
     }
 
-    @DeleteMapping("/bulkingcutting/api/registrocalorico/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<RegistroCalorico> deleteRegistroCalorico(@PathVariable Long id) {
         log.info("Exclusão do registro de calorias");
-        var registroCalorico = registroCaloricoRepository.findById(id);
+        var registroCalorico = getRegistro(id);
+        registroCaloricoRepository.delete(registroCalorico);
 
-        if (registroCalorico.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        registroCaloricoRepository.delete(registroCalorico.get());
         return ResponseEntity.noContent().build();
 
     }
 
-    @PutMapping("/bulkingcutting/api/registrocalorico/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<RegistroCalorico> putRegistroCalorico(@PathVariable Long id,
-            @RequestBody RegistroCalorico registroCalorico) {
+            @RequestBody @Valid RegistroCalorico registroCalorico) {
         log.info("Atualização do registro de calorias");
 
-        var registroCaloricoAtual = registroCaloricoRepository.findById(id);
-        if (registroCaloricoAtual.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
+        getRegistro(id);
         registroCalorico.setId(id);
         registroCaloricoRepository.save(registroCalorico);
 
-        return ResponseEntity.ok().body(registroCalorico);
+        return ResponseEntity.ok(registroCalorico);
 
+    }
+
+    private RegistroCalorico getRegistro(Long id) {
+        return registroCaloricoRepository.findById(id)
+                .orElseThrow(() -> new RestNotFoundException("Registro de calorias não encontrado"));
     }
 
 }

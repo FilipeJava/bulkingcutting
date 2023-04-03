@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fiap.bulkingcutting.exception.RestNotFoundException;
 import br.com.fiap.bulkingcutting.models.DadosUser;
 import br.com.fiap.bulkingcutting.repository.DadosUserRepository;
+import jakarta.validation.Valid;
 
 @RestController
+@RequestMapping("/bulkingcutting/api/dados")
 public class DadosUserController {
 
     Logger log = LoggerFactory.getLogger(DadosUserController.class);
@@ -29,59 +33,52 @@ public class DadosUserController {
     @Autowired
     DadosUserRepository dadosUserRepository;
 
-    @GetMapping("/bulkingcutting/api/dados")
-        public List<DadosUser> getDadosUser() {
+    @GetMapping
+    public List<DadosUser> getDadosUser() {
         log.info("Todos os dados dos Usuários");
         return dadosUserRepository.findAll();
     }
 
-    @GetMapping("/bulkingcutting/api/dados/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<DadosUser> getDadosUserById(@PathVariable Long id) {
         log.info("Dados do Usuário" + id + "econtrado");
 
-        var dadosUser = dadosUserRepository.findById(id);
-        if (dadosUser.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        var dadosUser = getDados(id);
 
-        return ResponseEntity.ok(dadosUser.get());
+        return ResponseEntity.ok(dadosUser);
 
     }
 
-    @PostMapping("/bulkingcutting/api/dados")
-    public ResponseEntity<DadosUser> postDadosUser(@RequestBody DadosUser dadosUser) {
+    @PostMapping
+    public ResponseEntity<DadosUser> postDadosUser(@RequestBody @Valid DadosUser dadosUser) {
         log.info("Cadastro do Usuário");
-        
+
         dadosUserRepository.save(dadosUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(dadosUser);
     }
 
-    @DeleteMapping("/bulkingcutting/api/dados/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<DadosUser> deleteDadosUser(@PathVariable Long id) {
         log.info("Deletando o Usuário" + id);
-        var dadosUser = dadosUserRepository.findById(id);
-        if (dadosUser.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        dadosUserRepository.delete(dadosUser.get());
-
+        var dadosUser = getDados(id);
+        dadosUserRepository.delete(dadosUser);
         return ResponseEntity.noContent().build();
-
     }
 
-    @PutMapping("/bulkingcutting/api/dados/{id}")
-    public ResponseEntity<DadosUser> putDadosUser(@PathVariable Long id, @RequestBody DadosUser dadosUser) {
+    @PutMapping("{id}")
+    public ResponseEntity<DadosUser> putDadosUser(@PathVariable Long id, @RequestBody @Valid DadosUser dadosUser) {
         log.info("Atualizando o Usuário" + id);
-
-        var dadosFilter = dadosUserRepository.findById(id);
-        if (dadosFilter.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        dadosUserList.remove(dadosFilter.get());
+        getDados(id);
         dadosUser.setId(id);
         dadosUserRepository.save(dadosUser);
-        return ResponseEntity.ok().body(dadosUser);
+        return ResponseEntity.ok(dadosUser);
 
     }
+
+    private DadosUser getDados(Long id) {
+        return dadosUserRepository.findById(id)
+                .orElseThrow(() -> new RestNotFoundException("Dados do Usuário não encontrado"));
+    }
+
 }
