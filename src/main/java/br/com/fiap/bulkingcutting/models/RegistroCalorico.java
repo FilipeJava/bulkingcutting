@@ -47,7 +47,7 @@ public class RegistroCalorico {
     private BigDecimal calorias;
 
     @ManyToOne
-    @JoinColumn(name = "dadosUser")
+    @JoinColumn(name = "dadosUse_id")
     private DadosUser dadosUser;
 
 }
