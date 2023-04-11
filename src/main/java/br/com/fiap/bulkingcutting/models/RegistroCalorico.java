@@ -46,8 +46,8 @@ public class RegistroCalorico {
     @Min(value = 0, message = "Valor mínimo de calorias é 0")
     private BigDecimal calorias;
 
-    @ManyToOne
-    @JoinColumn(name = "dadosUse_id")
-    private DadosUser dadosUser;
+   
+    @JoinColumn(name = "dadosUser_id")
+    private Long idDadosUser;
 
 }

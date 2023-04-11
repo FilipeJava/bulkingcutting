@@ -50,7 +50,7 @@ public class RegistroCaloricoController {
     public ResponseEntity<RegistroCalorico> postRegistroCalorico(
             @RequestBody @Valid RegistroCalorico registroCalorico) {
         log.info("Cadastro do registro de calorias");
-
+                    
         registroCaloricoRepository.save(registroCalorico);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(registroCalorico);

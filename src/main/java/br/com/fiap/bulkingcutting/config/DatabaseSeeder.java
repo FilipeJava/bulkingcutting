@@ -22,7 +22,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Autowired
     DadosUserRepository dadosUserRepository;
 
-    List<RegistroCalorico> registroCaloricos = new ArrayList<>();
+    List<RegistroCalorico> registroCaloricos;
 
     @Override
     public void run(String... args) throws Exception {

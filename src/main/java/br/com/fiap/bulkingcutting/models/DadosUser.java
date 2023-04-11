@@ -60,8 +60,8 @@ public class DadosUser {
     @Min(value = 0, message = "Valor mínimo de altura é 0")
     private Integer altura;
 
-    @OneToMany(mappedBy = "dadosUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RegistroCalorico> registrosCaloricos = new ArrayList<>();
+    @OneToMany
+    private List<RegistroCalorico> registrosCaloricos ;
 
     
 
