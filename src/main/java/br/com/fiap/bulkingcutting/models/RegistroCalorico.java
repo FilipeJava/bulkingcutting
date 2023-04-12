@@ -3,8 +3,6 @@ package br.com.fiap.bulkingcutting.models;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import org.hibernate.annotations.ManyToAny;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,11 +16,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegistroCalorico {
@@ -46,8 +46,8 @@ public class RegistroCalorico {
     @Min(value = 0, message = "Valor mínimo de calorias é 0")
     private BigDecimal calorias;
 
-    @ManyToOne
+    // @ManyToOne
     @JoinColumn(name = "dadosUser_id")
-    private DadosUser dadosUser;
+    private Long idDadosUser;
 
 }

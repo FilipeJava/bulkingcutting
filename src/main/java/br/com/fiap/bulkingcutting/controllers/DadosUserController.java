@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.bulkingcutting.exception.RestNotFoundException;
 import br.com.fiap.bulkingcutting.models.DadosUser;
 import br.com.fiap.bulkingcutting.repository.DadosUserRepository;
+import br.com.fiap.bulkingcutting.repository.RegistroCaloricoRepository;
 import jakarta.validation.Valid;
 
 @RestController
@@ -28,10 +29,13 @@ public class DadosUserController {
 
     Logger log = LoggerFactory.getLogger(DadosUserController.class);
 
-    List<DadosUser> dadosUserList = new ArrayList<DadosUser>();
+    
 
     @Autowired
     DadosUserRepository dadosUserRepository;
+
+    @Autowired
+    RegistroCaloricoRepository registroCaloricoRepository;
 
     @GetMapping
     public List<DadosUser> getDadosUser() {
@@ -43,7 +47,9 @@ public class DadosUserController {
     public ResponseEntity<DadosUser> getDadosUserById(@PathVariable Long id) {
         log.info("Dados do Usuário" + id + "econtrado");
 
-        var dadosUser = getDados(id);
+        DadosUser dadosUser = getDados(id);
+
+        dadosUser.setRegistrosCaloricos(registroCaloricoRepository.findByidDadosUser(dadosUser.getId()));
 
         return ResponseEntity.ok(dadosUser);
 
