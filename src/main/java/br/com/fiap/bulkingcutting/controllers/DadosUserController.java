@@ -19,66 +19,116 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.bulkingcutting.exception.RestNotFoundException;
 import br.com.fiap.bulkingcutting.models.DadosUser;
+import br.com.fiap.bulkingcutting.models.form.DadosUserForm;
 import br.com.fiap.bulkingcutting.repository.DadosUserRepository;
+import br.com.fiap.bulkingcutting.service.impl.DadosUserServiceImpl;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/bulkingcutting/api/dados")
+@RequestMapping("/bulkingcutting/api/usuario/")
 public class DadosUserController {
 
     Logger log = LoggerFactory.getLogger(DadosUserController.class);
 
-    List<DadosUser> dadosUserList = new ArrayList<DadosUser>();
+    // List<DadosUser> dadosUserList = new ArrayList<DadosUser>();
 
     @Autowired
-    DadosUserRepository dadosUserRepository;
+    private DadosUserServiceImpl dadosUserService;
+
 
     @GetMapping
     public List<DadosUser> getDadosUser() {
         log.info("Todos os dados dos Usuários");
-        return dadosUserRepository.findAll();
+        return dadosUserService.getAllUsuarios();
     }
 
     @GetMapping("{id}")
     public ResponseEntity<DadosUser> getDadosUserById(@PathVariable Long id) {
         log.info("Dados do Usuário" + id + "econtrado");
 
-        var dadosUser = getDados(id);
+        var dadosUser = dadosUserService.getUsuario(id);
 
         return ResponseEntity.ok(dadosUser);
 
     }
 
     @PostMapping
-    public ResponseEntity<DadosUser> postDadosUser(@RequestBody @Valid DadosUser dadosUser) {
+    public ResponseEntity<DadosUser> postDadosUser(@RequestBody @Valid DadosUserForm dadosUser) {
         log.info("Cadastro do Usuário");
 
-        dadosUserRepository.save(dadosUser);
+        DadosUser usuario = dadosUserService.create(dadosUser);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(dadosUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<DadosUser> putDadosUser(@PathVariable Long id, @RequestBody @Valid DadosUserForm dadosUser) {
+        log.info("Atualização do Usuário" + id);
+
+        DadosUser usuario = dadosUserService.update(dadosUser, id);
+
+        return ResponseEntity.ok(usuario);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<DadosUser> deleteDadosUser(@PathVariable Long id) {
         log.info("Deletando o Usuário" + id);
-        var dadosUser = getDados(id);
-        dadosUserRepository.delete(dadosUser);
+        dadosUserService.deleteUsuario(id);
         return ResponseEntity.noContent().build();
     }
+    
 
-    @PutMapping("{id}")
-    public ResponseEntity<DadosUser> putDadosUser(@PathVariable Long id, @RequestBody @Valid DadosUser dadosUser) {
-        log.info("Atualizando o Usuário" + id);
-        getDados(id);
-        dadosUser.setId(id);
-        dadosUserRepository.save(dadosUser);
-        return ResponseEntity.ok(dadosUser);
 
-    }
+    // private DadosUser getDados(Long id) {
+    //     return dadosUserRepository.findById(id)
+    //             .orElseThrow(() -> new RestNotFoundException("Dados do Usuário não encontrado"));
+    // }
 
-    private DadosUser getDados(Long id) {
-        return dadosUserRepository.findById(id)
-                .orElseThrow(() -> new RestNotFoundException("Dados do Usuário não encontrado"));
-    }
+
+
+    // @GetMapping
+    // public List<DadosUser> getDadosUser() {
+    //     log.info("Todos os dados dos Usuários");
+    //     return dadosUserRepository.findAll();
+    // }
+
+    // @GetMapping("{id}")
+    // public ResponseEntity<DadosUser> getDadosUserById(@PathVariable Long id) {
+    //     log.info("Dados do Usuário" + id + "econtrado");
+
+    //     var dadosUser = getDados(id);
+
+    //     return ResponseEntity.ok(dadosUser);
+
+    // }
+
+    // @PostMapping
+    // public ResponseEntity<DadosUser> postDadosUser(@RequestBody @Valid DadosUser dadosUser) {
+    //     log.info("Cadastro do Usuário");
+
+    //     dadosUserRepository.save(dadosUser);
+
+    //     return ResponseEntity.status(HttpStatus.CREATED).body(dadosUser);
+    // }
+
+    // @DeleteMapping("{id}")
+    // public ResponseEntity<DadosUser> deleteDadosUser(@PathVariable Long id) {
+    //     log.info("Deletando o Usuário" + id);
+    //     var dadosUser = getDados(id);
+    //     dadosUserRepository.delete(dadosUser);
+    //     return ResponseEntity.noContent().build();
+    // }
+
+    // @PutMapping("{id}")
+    // public ResponseEntity<DadosUser> putDadosUser(@PathVariable Long id, @RequestBody @Valid DadosUser dadosUser) {
+    //     log.info("Atualizando o Usuário" + id);
+    //     getDados(id);
+    //     dadosUser.setId(id);
+    //     dadosUserRepository.save(dadosUser);
+    //     return ResponseEntity.ok(dadosUser);
+
+    // }
+
+   
 
 }
