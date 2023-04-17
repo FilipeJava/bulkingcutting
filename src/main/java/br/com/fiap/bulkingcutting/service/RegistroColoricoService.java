@@ -18,13 +18,13 @@ public interface RegistroColoricoService {
     
    RegistroCalorico getRegistroCalorico(Long id);
 
-    List<RegistroCalorico> getAllRegistroCalorico();
+   Page<RegistroCalorico> getAllRegistroCalorico(Pageable paginacao);
 
     Page<RegistroCalorico>getAllRegistroCaloricoByTipo(String tipo , Pageable paginacao);
 
     RegistroCalorico update(RegistroCaloricoUpdateForm form, Long id); 
 
-    Page<RegistroCalorico> findAllPaginacao(Pageable paginacao);
+  
     
     void deleteRegistro(Long id);
 }

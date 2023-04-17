@@ -38,11 +38,7 @@ public class RegistroCaloricoController {
     @Autowired
     private RegistroColoricoServiceImpl registroColoricoService;
 
-    @GetMapping
-    public List<RegistroCalorico> getRegistroCalorico() {
-        log.info("Todos os registros de calorias");
-        return registroColoricoService.getAllRegistroCalorico();
-    }
+   
 
     @GetMapping("{id}")
     public ResponseEntity<RegistroCalorico> getRegistroCaloricoById(@PathVariable Long id) {
@@ -78,9 +74,11 @@ public class RegistroCaloricoController {
     public Page<RegistroCalorico> index(@RequestParam(required = false) String tipo,
             @PageableDefault(size = 5) Pageable paginacao) {
 
-        if (tipo == null) {
-            return registroColoricoService.findAllPaginacao(paginacao);
-        }
+                if (tipo == null) {
+                    return registroColoricoService.getAllRegistroCalorico(paginacao);
+
+                }
+
 
         return registroColoricoService.getAllRegistroCaloricoByTipo(tipo, paginacao);
     }
