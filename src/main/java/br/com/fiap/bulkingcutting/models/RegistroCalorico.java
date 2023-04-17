@@ -50,7 +50,7 @@ public class RegistroCalorico {
     private BigDecimal calorias;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
+    // @JsonBackReference
     @JoinColumn(name = "usuario_id")
     private DadosUser usuario;
 

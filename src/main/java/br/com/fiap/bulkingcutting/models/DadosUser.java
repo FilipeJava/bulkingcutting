@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -66,7 +67,8 @@ public class DadosUser {
     private Integer altura;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    // @JsonManagedReference
+    @JsonIgnore
     private List<RegistroCalorico> registrosCaloricos = new ArrayList<>() ;
 
     
