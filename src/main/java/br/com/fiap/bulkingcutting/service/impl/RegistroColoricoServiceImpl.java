@@ -3,6 +3,8 @@ package br.com.fiap.bulkingcutting.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.bulkingcutting.models.DadosUser;
@@ -60,6 +62,16 @@ public class RegistroColoricoServiceImpl implements RegistroColoricoService {
     @Override
     public void deleteRegistro(Long id) {
         registroCaloricoRepository.deleteById(id);
+    }
+
+    @Override
+    public Page <RegistroCalorico> getAllRegistroCaloricoByTipo(String tipo , Pageable paginacao) {
+        return registroCaloricoRepository.findByTipo(tipo , paginacao);
+       
+    }
+
+    public Page<RegistroCalorico>findAllPaginacao(Pageable paginacao) {
+        return registroCaloricoRepository.findAll(paginacao);
     }
 
    
