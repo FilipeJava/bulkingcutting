@@ -9,7 +9,8 @@ import br.com.fiap.bulkingcutting.models.Tipo;
 
 public interface RegistroCaloricoRepository extends JpaRepository<RegistroCalorico, Long> {
      
-    Page<RegistroCalorico> findByTipo( String tipo, Pageable paginacao);
+    //buscar todos os registros de um usuario pelo tipo
+    Page<RegistroCalorico> findByTipo( Tipo tipo, Pageable paginacao);
 
   
 
