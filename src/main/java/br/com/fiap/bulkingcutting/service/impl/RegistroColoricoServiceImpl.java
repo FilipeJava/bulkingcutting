@@ -44,10 +44,6 @@ public class RegistroColoricoServiceImpl implements RegistroColoricoService {
         return registroCaloricoRepository.findById(id).get();
     }
 
-    @Override
-    public List<RegistroCalorico> getAllRegistroCalorico() {
-        return registroCaloricoRepository.findAll();
-    }
 
     @Override
     public RegistroCalorico update(RegistroCaloricoUpdateForm form, Long id) {
@@ -70,9 +66,13 @@ public class RegistroColoricoServiceImpl implements RegistroColoricoService {
        
     }
 
-    public Page<RegistroCalorico>findAllPaginacao(Pageable paginacao) {
+    
+
+    @Override
+    public Page<RegistroCalorico> getAllRegistroCalorico(Pageable paginacao) {
         return registroCaloricoRepository.findAll(paginacao);
     }
+
 
    
     

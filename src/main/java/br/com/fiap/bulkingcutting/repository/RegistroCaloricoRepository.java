@@ -11,4 +11,6 @@ public interface RegistroCaloricoRepository extends JpaRepository<RegistroCalori
      
     Page<RegistroCalorico> findByTipo( String tipo, Pageable paginacao);
 
+  
+
 }

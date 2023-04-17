@@ -41,7 +41,7 @@ public class RegistroCalorico {
     private Tipo tipo; // Enum momentaneo
 
     @NotBlank
-    @Size(min = 5, max = 100)
+    @Size(min = 1, max = 100)
     private String descricao;
 
     @NotNull
