@@ -18,7 +18,7 @@ public interface RegistroColoricoService {
     
    RegistroCalorico getRegistroCalorico(Long id);
 
-   Page<RegistroCalorico> getAllRegistroCalorico(Pageable paginacao);
+    Page<RegistroCalorico> getAllRegistroCalorico(Pageable paginacao);
 
     Page<RegistroCalorico>getAllRegistroCaloricoByTipo(String tipo , Pageable paginacao);
 
