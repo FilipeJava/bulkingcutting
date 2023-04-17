@@ -15,6 +15,7 @@ public class RegistroCaloricoForm {
 
     private Long usuarioId;
 
+    
     private Tipo tipo;
 
     private String descricao;

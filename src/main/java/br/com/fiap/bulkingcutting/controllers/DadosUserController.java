@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.bulkingcutting.exception.RestNotFoundException;
 import br.com.fiap.bulkingcutting.models.DadosUser;
+import br.com.fiap.bulkingcutting.models.RegistroCalorico;
 import br.com.fiap.bulkingcutting.models.form.DadosUserForm;
 import br.com.fiap.bulkingcutting.repository.DadosUserRepository;
 import br.com.fiap.bulkingcutting.service.impl.DadosUserServiceImpl;
@@ -76,6 +77,14 @@ public class DadosUserController {
         dadosUserService.deleteUsuario(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    @GetMapping("/registro/{id}")
+    public List<RegistroCalorico> getRegistroCalorico( @PathVariable Long id) {
+        log.info("Todos os registros de calorias");
+        return dadosUserService.getAllRegistros(id);
+    }
+
     
 
 

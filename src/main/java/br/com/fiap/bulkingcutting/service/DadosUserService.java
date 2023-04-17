@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.bulkingcutting.models.DadosUser;
+import br.com.fiap.bulkingcutting.models.RegistroCalorico;
 import br.com.fiap.bulkingcutting.models.form.DadosUserForm;
 import br.com.fiap.bulkingcutting.models.form.DadosUserUpdateForm;
 
@@ -20,4 +21,6 @@ public interface DadosUserService {
     DadosUser update(DadosUserForm form, Long id);
 
     void deleteUsuario(Long id);
+
+    List<RegistroCalorico> getAllRegistros(Long id);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.bulkingcutting.models.DadosUser;
+import br.com.fiap.bulkingcutting.models.RegistroCalorico;
 import br.com.fiap.bulkingcutting.models.form.DadosUserForm;
 import br.com.fiap.bulkingcutting.repository.DadosUserRepository;
 import br.com.fiap.bulkingcutting.service.DadosUserService;
@@ -62,6 +63,16 @@ public class DadosUserServiceImpl implements DadosUserService {
         dadosUserRepository.deleteById(id);
         
     }
+
+    @Override
+    public List<RegistroCalorico> getAllRegistros( Long id ) {
+       
+        return dadosUserRepository.findById(id).get().getRegistrosCaloricos();
+       
+        
+    }
+
+ 
 
     
 }

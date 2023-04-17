@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.fiap.bulkingcutting.models.DadosUser;
 import br.com.fiap.bulkingcutting.models.RegistroCalorico;
 import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoForm;
 import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoUpdateForm;
+import br.com.fiap.bulkingcutting.repository.DadosUserRepository;
 import br.com.fiap.bulkingcutting.repository.RegistroCaloricoRepository;
 import br.com.fiap.bulkingcutting.service.RegistroColoricoService;
 
@@ -17,14 +19,18 @@ public class RegistroColoricoServiceImpl implements RegistroColoricoService {
     @Autowired
     private RegistroCaloricoRepository registroCaloricoRepository;
 
+    @Autowired
+    private DadosUserRepository dadosUserRepository;
+
     @Override
     public RegistroCalorico create(RegistroCaloricoForm form) {
-
+           DadosUser usuario =dadosUserRepository.findById(form.getUsuarioId()).get();
            RegistroCalorico registroCalorico = new RegistroCalorico();
-           registroCalorico.setCalorias(form.getCalorias());
+           registroCalorico.setUsuario(usuario);
            registroCalorico.setTipo(form.getTipo());
            registroCalorico.setDescricao(form.getDescricao());
            registroCalorico.setData(form.getData());
+           registroCalorico.setCalorias(form.getCalorias());
 
            return registroCaloricoRepository.save(registroCalorico);
          
