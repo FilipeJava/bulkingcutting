@@ -49,7 +49,7 @@ public class RegistroCalorico {
     @Min(value = 0, message = "Valor mínimo de calorias é 0")
     private BigDecimal calorias;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonBackReference
     @JoinColumn(name = "usuario_id")
     private DadosUser usuario;
