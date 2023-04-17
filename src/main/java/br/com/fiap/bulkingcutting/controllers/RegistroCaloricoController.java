@@ -6,6 +6,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,69 +22,128 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.bulkingcutting.exception.RestNotFoundException;
 import br.com.fiap.bulkingcutting.models.RegistroCalorico;
+import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoForm;
+import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoUpdateForm;
 import br.com.fiap.bulkingcutting.repository.RegistroCaloricoRepository;
+import br.com.fiap.bulkingcutting.service.impl.RegistroColoricoServiceImpl;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("/bulkingcutting/api/registrocalorico")
+@RequestMapping("/bulkingcutting/api/registrocalorico/")
 public class RegistroCaloricoController {
 
     Logger log = LoggerFactory.getLogger(RegistroCaloricoController.class);
 
-    List<RegistroCalorico> registroCaloricoList = new ArrayList<RegistroCalorico>();
-
     @Autowired
-    RegistroCaloricoRepository registroCaloricoRepository;
+    private RegistroColoricoServiceImpl registroColoricoService;
 
     @GetMapping
     public List<RegistroCalorico> getRegistroCalorico() {
         log.info("Todos os registros de calorias");
-        return registroCaloricoRepository.findAll();
+        return registroColoricoService.getAllRegistroCalorico();
     }
 
     @GetMapping("{id}")
     public ResponseEntity<RegistroCalorico> getRegistroCaloricoById(@PathVariable Long id) {
         log.info("Buscando de calorias do Usuário" + id);
-        var registroCalorico = getRegistro(id);
+
+        var registroCalorico = registroColoricoService.getRegistroCalorico(id);
+
         return ResponseEntity.ok(registroCalorico);
+
     }
 
     @PostMapping
     public ResponseEntity<RegistroCalorico> postRegistroCalorico(
-            @RequestBody @Valid RegistroCalorico registroCalorico) {
+            @RequestBody @Valid RegistroCaloricoForm registroCalorico) {
         log.info("Cadastro do registro de calorias");
-                    
-        registroCaloricoRepository.save(registroCalorico);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(registroCalorico);
-    }
+        RegistroCalorico registro = registroColoricoService.create(registroCalorico);
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<RegistroCalorico> deleteRegistroCalorico(@PathVariable Long id) {
-        log.info("Exclusão do registro de calorias");
-        var registroCalorico = getRegistro(id);
-        registroCaloricoRepository.delete(registroCalorico);
-
-        return ResponseEntity.noContent().build();
-
+        return ResponseEntity.status(HttpStatus.CREATED).body(registro);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<RegistroCalorico> putRegistroCalorico(@PathVariable Long id,
-            @RequestBody @Valid RegistroCalorico registroCalorico) {
-        log.info("Atualização do registro de calorias");
+            @RequestBody @Valid RegistroCaloricoUpdateForm registroCalorico) {
+        log.info("Atualizando o registro de calorias do Usuário" + id);
 
-        getRegistro(id);
-        registroCalorico.setId(id);
-        registroCaloricoRepository.save(registroCalorico);
+        RegistroCalorico registro = registroColoricoService.update(registroCalorico, id);
 
-        return ResponseEntity.ok(registroCalorico);
-
+        return ResponseEntity.ok(registro);
     }
 
-    private RegistroCalorico getRegistro(Long id) {
-        return registroCaloricoRepository.findById(id)
-                .orElseThrow(() -> new RestNotFoundException("Registro de calorias não encontrado"));
+    @GetMapping
+    public Page<RegistroCalorico> index(@RequestParam(required = false) String tipo,
+            @PageableDefault(size = 5) Pageable paginacao) {
+
+        if (tipo == null) {
+            return registroColoricoService.findAllPaginacao(paginacao);
+        }
+
+        return registroColoricoService.getAllRegistroCaloricoByTipo(tipo, paginacao);
     }
 
 }
+
+// List<RegistroCalorico> registroCaloricoList = new
+// ArrayList<RegistroCalorico>();
+
+// @Autowired
+// RegistroCaloricoRepository registroCaloricoRepository;
+
+// @GetMapping
+// public List<RegistroCalorico> getRegistroCalorico() {
+// log.info("Todos os registros de calorias");
+// return registroCaloricoRepository.findAll();
+// }
+
+// @GetMapping("{id}")
+// public ResponseEntity<RegistroCalorico> getRegistroCaloricoById(@PathVariable
+// Long id) {
+// log.info("Buscando de calorias do Usuário" + id);
+// var registroCalorico = getRegistro(id);
+// return ResponseEntity.ok(registroCalorico);
+// }
+
+// @PostMapping
+// public ResponseEntity<RegistroCalorico> postRegistroCalorico(
+// @RequestBody @Valid RegistroCalorico registroCalorico) {
+// log.info("Cadastro do registro de calorias");
+
+// registroCaloricoRepository.save(registroCalorico);
+
+// return ResponseEntity.status(HttpStatus.CREATED).body(registroCalorico);
+// }
+
+// @DeleteMapping("{id}")
+// public ResponseEntity<RegistroCalorico> deleteRegistroCalorico(@PathVariable
+// Long id) {
+// log.info("Exclusão do registro de calorias");
+// var registroCalorico = getRegistro(id);
+// registroCaloricoRepository.delete(registroCalorico);
+
+// return ResponseEntity.noContent().build();
+
+// }
+
+// @PutMapping("{id}")
+// public ResponseEntity<RegistroCalorico> putRegistroCalorico(@PathVariable
+// Long id,
+// @RequestBody @Valid RegistroCalorico registroCalorico) {
+// log.info("Atualização do registro de calorias");
+
+// getRegistro(id);
+// registroCalorico.setId(id);
+// registroCaloricoRepository.save(registroCalorico);
+
+// return ResponseEntity.ok(registroCalorico);
+
+// }
+
+// private RegistroCalorico getRegistro(Long id) {
+// return registroCaloricoRepository.findById(id)
+// .orElseThrow(() -> new RestNotFoundException("Registro de calorias não
+// encontrado"));
+// }

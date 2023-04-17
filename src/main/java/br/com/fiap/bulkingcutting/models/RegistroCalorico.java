@@ -5,6 +5,9 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.ManyToAny;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,10 +21,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -46,8 +51,9 @@ public class RegistroCalorico {
     @Min(value = 0, message = "Valor mínimo de calorias é 0")
     private BigDecimal calorias;
 
-   
-    @JoinColumn(name = "dadosUser_id")
-    private Long idDadosUser;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    // @JsonBackReference
+    @JoinColumn(name = "usuario_id")
+    private DadosUser usuario;
 
 }

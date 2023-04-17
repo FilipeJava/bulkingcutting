@@ -4,10 +4,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,6 +29,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class DadosUser {
 
     @Id
@@ -60,8 +66,10 @@ public class DadosUser {
     @Min(value = 0, message = "Valor mínimo de altura é 0")
     private Integer altura;
 
-    @OneToMany
-    private List<RegistroCalorico> registrosCaloricos ;
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    // @JsonManagedReference
+    @JsonIgnore
+    private List<RegistroCalorico> registrosCaloricos = new ArrayList<>() ;
 
     
 
