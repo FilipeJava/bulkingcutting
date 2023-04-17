@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.bulkingcutting.exception.RestNotFoundException;
 import br.com.fiap.bulkingcutting.models.RegistroCalorico;
+import br.com.fiap.bulkingcutting.models.Tipo;
 import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoForm;
 import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoUpdateForm;
 import br.com.fiap.bulkingcutting.repository.RegistroCaloricoRepository;
@@ -71,7 +72,7 @@ public class RegistroCaloricoController {
     }
 
     @GetMapping
-    public Page<RegistroCalorico> index(@RequestParam(required = false) String tipo,
+    public Page<RegistroCalorico> index(@RequestParam(required = false) Tipo tipo,
             @PageableDefault(size = 5) Pageable paginacao) {
 
                 if (tipo == null) {

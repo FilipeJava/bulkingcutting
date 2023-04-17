@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import br.com.fiap.bulkingcutting.models.RegistroCalorico;
+import br.com.fiap.bulkingcutting.models.Tipo;
 import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoForm;
 import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoUpdateForm;
 
@@ -20,7 +21,7 @@ public interface RegistroColoricoService {
 
     Page<RegistroCalorico> getAllRegistroCalorico(Pageable paginacao);
 
-    Page<RegistroCalorico>getAllRegistroCaloricoByTipo(String tipo , Pageable paginacao);
+    Page<RegistroCalorico>getAllRegistroCaloricoByTipo(Tipo tipo , Pageable paginacao);
 
     RegistroCalorico update(RegistroCaloricoUpdateForm form, Long id); 
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.fiap.bulkingcutting.models.DadosUser;
 import br.com.fiap.bulkingcutting.models.RegistroCalorico;
+import br.com.fiap.bulkingcutting.models.Tipo;
 import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoForm;
 import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoUpdateForm;
 import br.com.fiap.bulkingcutting.repository.DadosUserRepository;
@@ -61,7 +62,7 @@ public class RegistroColoricoServiceImpl implements RegistroColoricoService {
     }
 
     @Override
-    public Page <RegistroCalorico> getAllRegistroCaloricoByTipo(String tipo , Pageable paginacao) {
+    public Page <RegistroCalorico> getAllRegistroCaloricoByTipo(Tipo tipo , Pageable paginacao) {
         return registroCaloricoRepository.findByTipo(tipo , paginacao);
        
     }
