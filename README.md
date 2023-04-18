@@ -30,9 +30,9 @@ Uma API para controle de calorias consumidas e gastas
 ## Cadastrar Dados /Altera Dados
 
 
-  `POST`   /bulkingcutting/api/dados
+  `POST`   /bulkingcutting/api/usuario/
 
-  `P/api/daUT`   /bulkingcutting/api/dados/{id}
+  `P/api/daUT`   /bulkingcutting/api/usuario/{id}
 
   
 
@@ -86,9 +86,9 @@ Uma API para controle de calorias consumidas e gastas
 # Mostrar Detalhes Dados/GETALL
 
 
-  `GET-ID`   /bulkingcutting/api/dados/{id}
+  `GET-ID`   /bulkingcutting/api/usuario/{id}
 
-  `GET-ALL`   /bulkingcutting/api/dados/
+  `GET-ALL`  /bulkingcutting/api/usuario/
 
   
 
