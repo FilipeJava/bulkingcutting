@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -66,7 +65,7 @@ public class DadosUser {
     @Min(value = 0, message = "Valor mínimo de altura é 0")
     private Integer altura;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     // @JsonManagedReference
     @JsonIgnore
     private List<RegistroCalorico> registrosCaloricos = new ArrayList<>() ;

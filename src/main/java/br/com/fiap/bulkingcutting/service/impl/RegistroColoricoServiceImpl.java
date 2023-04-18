@@ -1,7 +1,5 @@
 package br.com.fiap.bulkingcutting.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,16 +25,15 @@ public class RegistroColoricoServiceImpl implements RegistroColoricoService {
 
     @Override
     public RegistroCalorico create(RegistroCaloricoForm form) {
-           DadosUser usuario =dadosUserRepository.findById(form.getUsuarioId()).get();
-           RegistroCalorico registroCalorico = new RegistroCalorico();
-           registroCalorico.setUsuario(usuario);
-           registroCalorico.setTipo(form.getTipo());
-           registroCalorico.setDescricao(form.getDescricao());
-           registroCalorico.setData(form.getData());
-           registroCalorico.setCalorias(form.getCalorias());
+        DadosUser usuario = dadosUserRepository.findById(form.getUsuarioId()).get();
+        RegistroCalorico registroCalorico = new RegistroCalorico();
+        registroCalorico.setUsuario(usuario);
+        registroCalorico.setTipo(form.getTipo());
+        registroCalorico.setDescricao(form.getDescricao());
+        registroCalorico.setData(form.getData());
+        registroCalorico.setCalorias(form.getCalorias());
 
-           return registroCaloricoRepository.save(registroCalorico);
-         
+        return registroCaloricoRepository.save(registroCalorico);
 
     }
 
@@ -44,7 +41,6 @@ public class RegistroColoricoServiceImpl implements RegistroColoricoService {
     public RegistroCalorico getRegistroCalorico(Long id) {
         return registroCaloricoRepository.findById(id).get();
     }
-
 
     @Override
     public RegistroCalorico update(RegistroCaloricoUpdateForm form, Long id) {
@@ -62,19 +58,14 @@ public class RegistroColoricoServiceImpl implements RegistroColoricoService {
     }
 
     @Override
-    public Page <RegistroCalorico> getAllRegistroCaloricoByTipo(Tipo tipo , Pageable paginacao) {
-        return registroCaloricoRepository.findByTipo(tipo , paginacao);
-       
-    }
+    public Page<RegistroCalorico> getAllRegistroCaloricoByTipo(Tipo tipo, Pageable paginacao) {
+        return registroCaloricoRepository.findByTipo(tipo, paginacao);
 
-    
+    }
 
     @Override
     public Page<RegistroCalorico> getAllRegistroCalorico(Pageable paginacao) {
         return registroCaloricoRepository.findAll(paginacao);
     }
 
-
-   
-    
 }
