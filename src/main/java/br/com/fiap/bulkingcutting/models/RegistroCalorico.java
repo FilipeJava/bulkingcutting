@@ -3,11 +3,6 @@ package br.com.fiap.bulkingcutting.models;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import org.hibernate.annotations.ManyToAny;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -51,7 +46,7 @@ public class RegistroCalorico {
     @Min(value = 0, message = "Valor mínimo de calorias é 0")
     private BigDecimal calorias;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     // @JsonBackReference
     @JoinColumn(name = "usuario_id")
     private DadosUser usuario;

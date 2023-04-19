@@ -1,6 +1,5 @@
 package br.com.fiap.bulkingcutting.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fiap.bulkingcutting.exception.RestNotFoundException;
 import br.com.fiap.bulkingcutting.models.DadosUser;
 import br.com.fiap.bulkingcutting.models.RegistroCalorico;
 import br.com.fiap.bulkingcutting.models.form.DadosUserForm;
-import br.com.fiap.bulkingcutting.repository.DadosUserRepository;
 import br.com.fiap.bulkingcutting.service.impl.DadosUserServiceImpl;
 import jakarta.validation.Valid;
 
