@@ -3,7 +3,6 @@ package br.com.fiap.bulkingcutting.models;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
