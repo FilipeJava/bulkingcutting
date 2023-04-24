@@ -10,20 +10,15 @@ import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoUpdateForm;
 
 public interface RegistroColoricoService {
 
+    RegistroCalorico create(RegistroCaloricoForm form);
 
-
-
-   RegistroCalorico create(RegistroCaloricoForm form);
-    
-   RegistroCalorico getRegistroCalorico(Long id);
+    RegistroCalorico getRegistroCalorico(Long id);
 
     Page<RegistroCalorico> getAllRegistroCalorico(Pageable paginacao);
 
-    Page<RegistroCalorico>getAllRegistroCaloricoByTipo(Tipo tipo , Pageable paginacao);
+    Page<RegistroCalorico> getAllRegistroCaloricoByTipo(Tipo tipo, Pageable paginacao);
 
-    RegistroCalorico update(RegistroCaloricoUpdateForm form, Long id); 
+    RegistroCalorico update(RegistroCaloricoUpdateForm form, Long id);
 
-  
-    
     void deleteRegistro(Long id);
 }

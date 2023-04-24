@@ -3,6 +3,11 @@ package br.com.fiap.bulkingcutting.models.form;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+
+import br.com.fiap.bulkingcutting.controllers.RegistroCaloricoController;
+import br.com.fiap.bulkingcutting.models.RegistroCalorico;
 import br.com.fiap.bulkingcutting.models.Tipo;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -25,14 +30,11 @@ public class RegistroCaloricoForm {
     @NotBlank
     @Size(min = 1, max = 100)
     private String descricao;
-     @NotNull
+    @NotNull
     private LocalDate data;
 
     @NotNull
     @Min(value = 0, message = "Valor mínimo de calorias é 0")
     private BigDecimal calorias;
-
-   
-
 
 }

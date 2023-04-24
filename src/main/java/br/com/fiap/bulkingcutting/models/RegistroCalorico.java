@@ -3,6 +3,15 @@ package br.com.fiap.bulkingcutting.models;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+
+import br.com.fiap.bulkingcutting.controllers.DadosUserController;
+import br.com.fiap.bulkingcutting.controllers.RegistroCaloricoController;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -50,5 +59,16 @@ public class RegistroCalorico {
     // @JsonBackReference
     @JoinColumn(name = "usuario_id")
     private DadosUser usuario;
+
+    public EntityModel<RegistroCalorico> toEntityModel() {
+        return EntityModel.of(
+                this,
+                linkTo(methodOn(RegistroCaloricoController.class).getRegistroCaloricoById(id)).withSelfRel(),
+                linkTo(methodOn(RegistroCaloricoController.class).deleteRegistroCalorico(id)).withRel("delete"),
+                linkTo(methodOn(DadosUserController.class).getDadosUserById(usuario.getId())).withRel("usuario"),
+                linkTo(methodOn(RegistroCaloricoController.class).index(null, Pageable.unpaged())).withRel("all")
+
+        );
+    }
 
 }
