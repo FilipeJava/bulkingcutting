@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,49 +36,57 @@ public class RegistroCaloricoController {
     @Autowired
     private RegistroColoricoServiceImpl registroColoricoService;
 
-   
+    @Autowired
+    PagedResourcesAssembler<Object> assembler;
 
     @GetMapping("{id}")
-    public ResponseEntity<RegistroCalorico> getRegistroCaloricoById(@PathVariable Long id) {
+    public EntityModel<RegistroCalorico> getRegistroCaloricoById(@PathVariable Long id) {
         log.info("Buscando de calorias do Usuário" + id);
 
-        var registroCalorico = registroColoricoService.getRegistroCalorico(id);
+        return registroColoricoService.getRegistroCalorico(id).toEntityModel();
 
-        return ResponseEntity.ok(registroCalorico);
+        // return ResponseEntity.ok(registroCalorico);
 
     }
 
     @PostMapping
-    public ResponseEntity<RegistroCalorico> postRegistroCalorico(
+    public ResponseEntity<Object> postRegistroCalorico(
             @RequestBody @Valid RegistroCaloricoForm registroCalorico) {
         log.info("Cadastro do registro de calorias");
 
         RegistroCalorico registro = registroColoricoService.create(registroCalorico);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(registro);
+        return ResponseEntity.created(registro.toEntityModel().getRequiredLink("self").toUri())
+                .body(registro.toEntityModel());
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<RegistroCalorico> putRegistroCalorico(@PathVariable Long id,
+    public EntityModel<RegistroCalorico> putRegistroCalorico(@PathVariable Long id,
             @RequestBody @Valid RegistroCaloricoUpdateForm registroCalorico) {
         log.info("Atualizando o registro de calorias do Usuário" + id);
 
         RegistroCalorico registro = registroColoricoService.update(registroCalorico, id);
 
-        return ResponseEntity.ok(registro);
+        return registro.toEntityModel();
     }
 
     @GetMapping
-    public Page<RegistroCalorico> index(@RequestParam(required = false) Tipo tipo,
+    public PagedModel<EntityModel<Object>> index(@RequestParam(required = false) Tipo tipo,
             @PageableDefault(size = 5) Pageable paginacao) {
 
-                if (tipo == null) {
-                    return registroColoricoService.getAllRegistroCalorico(paginacao);
+        Page<RegistroCalorico> registroCalorico = (tipo == null)
+                ? registroColoricoService.getAllRegistroCalorico(paginacao)
+                : registroColoricoService.getAllRegistroCaloricoByTipo(tipo, paginacao);
 
-                }
+        return assembler.toModel(registroCalorico.map(registro -> EntityModel.of(registro)));
+    }
 
-
-        return registroColoricoService.getAllRegistroCaloricoByTipo(tipo, paginacao);
+    @DeleteMapping("{id}")
+    public ResponseEntity<RegistroCalorico> deleteRegistroCalorico(@PathVariable Long id) {
+        log.info("Exclusão do registro de calorias");
+        var registroCalorico = registroColoricoService.getRegistroCalorico(id);
+        registroColoricoService.delete(registroCalorico);
+        return ResponseEntity.noContent().build();
     }
 
 }
