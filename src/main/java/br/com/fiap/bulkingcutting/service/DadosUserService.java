@@ -6,10 +6,9 @@ import br.com.fiap.bulkingcutting.models.DadosUser;
 import br.com.fiap.bulkingcutting.models.RegistroCalorico;
 import br.com.fiap.bulkingcutting.models.form.DadosUserForm;
 
-
 public interface DadosUserService {
 
-    DadosUser create(DadosUserForm form);
+    DadosUser create(DadosUser dadosUser);
 
     DadosUser getUsuario(Long id);
 

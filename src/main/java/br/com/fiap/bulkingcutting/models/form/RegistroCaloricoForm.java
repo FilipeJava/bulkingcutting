@@ -3,11 +3,6 @@ package br.com.fiap.bulkingcutting.models.form;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.EntityModel;
-
-import br.com.fiap.bulkingcutting.controllers.RegistroCaloricoController;
-import br.com.fiap.bulkingcutting.models.RegistroCalorico;
 import br.com.fiap.bulkingcutting.models.Tipo;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
