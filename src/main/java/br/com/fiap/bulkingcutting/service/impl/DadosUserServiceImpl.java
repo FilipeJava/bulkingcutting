@@ -20,16 +20,6 @@ public class DadosUserServiceImpl implements DadosUserService {
     @Override
     public DadosUser create(DadosUser dadosUser) {
 
-        // DadosUser dadosUser = new DadosUser();
-        // dadosUser.setNome(form.getNome());
-        // dadosUser.setSexo(form.getSexo());
-        // dadosUser.setAltura(form.getAltura());
-        // dadosUser.setEmail(form.getEmail());
-        // dadosUser.setSenha(form.getSenha());
-        // dadosUser.setPeso(form.getPeso());
-        // dadosUser.setIdade(form.getIdade());
-        // dadosUser.setObjetivo(form.getObjetivo());
-
         return dadosUserRepository.save(dadosUser);
     }
 
