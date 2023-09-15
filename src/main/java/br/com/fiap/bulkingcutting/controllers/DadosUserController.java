@@ -83,7 +83,7 @@ public class DadosUserController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/registro/{id}")
+    @GetMapping("registro/{id}")
     public List<RegistroCalorico> getRegistroCalorico(@PathVariable Long id) {
         log.info("Todos os registros de calorias");
         return dadosUserService.getAllRegistros(id);
