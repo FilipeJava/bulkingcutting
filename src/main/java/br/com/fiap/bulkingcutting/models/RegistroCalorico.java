@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import br.com.fiap.bulkingcutting.controllers.DadosUserController;
 import br.com.fiap.bulkingcutting.controllers.RegistroCaloricoController;
 
@@ -56,7 +58,7 @@ public class RegistroCalorico {
     private BigDecimal calorias;
 
     @ManyToOne
-    // @JsonBackReference
+    @JsonBackReference
     @JoinColumn(name = "usuario_id")
     private DadosUser usuario;
 

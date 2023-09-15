@@ -4,8 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -28,7 +29,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class DadosUser {
 
     @Id
@@ -66,10 +67,9 @@ public class DadosUser {
     private Integer altura;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // @JsonManagedReference
-    @JsonIgnore
-    private List<RegistroCalorico> registrosCaloricos = new ArrayList<>() ;
 
-    
+    // @JsonIgnore
+    @JsonManagedReference
+    private List<RegistroCalorico> registrosCaloricos = new ArrayList<>();
 
 }

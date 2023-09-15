@@ -10,7 +10,7 @@ import br.com.fiap.bulkingcutting.models.form.RegistroCaloricoUpdateForm;
 
 public interface RegistroColoricoService {
 
-    RegistroCalorico create(RegistroCaloricoForm form);
+    RegistroCalorico create(Long id ,RegistroCaloricoForm form);
 
     RegistroCalorico getRegistroCalorico(Long id);
 

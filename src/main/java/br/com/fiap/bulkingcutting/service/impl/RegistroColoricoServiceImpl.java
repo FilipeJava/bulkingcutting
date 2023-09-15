@@ -25,8 +25,8 @@ public class RegistroColoricoServiceImpl implements RegistroColoricoService {
     private DadosUserRepository dadosUserRepository;
 
     @Override
-    public RegistroCalorico create(RegistroCaloricoForm form) {
-        DadosUser usuario = dadosUserRepository.findById(form.getUsuarioId()).get();
+    public RegistroCalorico create(Long id,RegistroCaloricoForm form ) {
+        DadosUser usuario = dadosUserRepository.findById(id).get();
         RegistroCalorico registroCalorico = new RegistroCalorico();
         registroCalorico.setUsuario(usuario);
         registroCalorico.setTipo(form.getTipo());

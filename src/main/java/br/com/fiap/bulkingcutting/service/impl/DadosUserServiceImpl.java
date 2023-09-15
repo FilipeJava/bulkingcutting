@@ -18,36 +18,26 @@ public class DadosUserServiceImpl implements DadosUserService {
     private DadosUserRepository dadosUserRepository;
 
     @Override
-    public DadosUser create(DadosUserForm form) {
-        
-       DadosUser dadosUser = new DadosUser();
-            dadosUser.setNome(form.getNome());
-            dadosUser.setSexo(form.getSexo());
-            dadosUser.setAltura(form.getAltura());
-            dadosUser.setEmail(form.getEmail());
-            dadosUser.setSenha(form.getSenha());
-            dadosUser.setPeso(form.getPeso());
-            dadosUser.setIdade(form.getIdade());
-            dadosUser.setObjetivo(form.getObjetivo());
-           
-         return dadosUserRepository.save(dadosUser);
+    public DadosUser create(DadosUser dadosUser) {
+
+        return dadosUserRepository.save(dadosUser);
     }
 
     @Override
     public DadosUser getUsuario(Long id) {
-       
+
         return dadosUserRepository.findById(id).get();
-       
+
     }
 
     @Override
     public List<DadosUser> getAllUsuarios() {
-       return dadosUserRepository.findAll();
+        return dadosUserRepository.findAll();
     }
 
     @Override
     public DadosUser update(DadosUserForm form, Long id) {
-        
+
         DadosUser dadosUser = dadosUserRepository.findById(id).get();
         dadosUser.setNome(form.getNome());
         dadosUser.setSexo(form.getSexo());
@@ -61,18 +51,14 @@ public class DadosUserServiceImpl implements DadosUserService {
     @Override
     public void deleteUsuario(Long id) {
         dadosUserRepository.deleteById(id);
-        
+
     }
 
     @Override
-    public List<RegistroCalorico> getAllRegistros( Long id ) {
-       
+    public List<RegistroCalorico> getAllRegistros(Long id) {
+
         return dadosUserRepository.findById(id).get().getRegistrosCaloricos();
-       
-        
+
     }
 
- 
-
-    
 }
