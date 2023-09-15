@@ -45,16 +45,16 @@ public class RegistroCaloricoController {
 
         return registroColoricoService.getRegistroCalorico(id).toEntityModel();
 
-        // return ResponseEntity.ok(registroCalorico);
+     
 
     }
 
-    @PostMapping
-    public ResponseEntity<Object> postRegistroCalorico(
+    @PostMapping("{id}")
+    public ResponseEntity<Object> postRegistroCalorico( @PathVariable Long id,
             @RequestBody @Valid RegistroCaloricoForm registroCalorico) {
         log.info("Cadastro do registro de calorias");
 
-        RegistroCalorico registro = registroColoricoService.create(registroCalorico);
+        RegistroCalorico registro = registroColoricoService.create(id,registroCalorico);
 
         return ResponseEntity.created(registro.toEntityModel().getRequiredLink("self").toUri())
                 .body(registro.toEntityModel());

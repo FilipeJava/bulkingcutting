@@ -50,24 +50,7 @@ public class DatabaseSeeder implements CommandLineRunner {
             .calorias(new BigDecimal(150)).usuario(user1).build(),
         RegistroCalorico.builder().tipo(Tipo.REFEICAO).descricao("Ceia").data(LocalDate.now())
             .calorias(new BigDecimal(100)).usuario(user1).build(),
-        RegistroCalorico.builder().tipo(Tipo.REFEICAO).descricao("Cafe da Tarde").data(LocalDate.now())
-            .calorias(new BigDecimal(120)).usuario(user1).build(),
-        RegistroCalorico.builder().tipo(Tipo.REFEICAO).descricao("Besteira").data(LocalDate.now())
-            .calorias(new BigDecimal(120)).usuario(user1).build(),
-        RegistroCalorico.builder().tipo(Tipo.REFEICAO).descricao("Cafe da Manha").data(LocalDate.now())
-            .calorias(new BigDecimal(600)).usuario(user1).build(),
-        RegistroCalorico.builder().tipo(Tipo.EXERCICIO).descricao("Arroz").data(LocalDate.now())
-            .calorias(new BigDecimal(100)).usuario(user1).build(),
-        RegistroCalorico.builder().tipo(Tipo.EXERCICIO).descricao("Arroz").data(LocalDate.now())
-            .calorias(new BigDecimal(100)).usuario(user1).build(),
-        RegistroCalorico.builder().tipo(Tipo.EXERCICIO).descricao("Arroz").data(LocalDate.now())
-            .calorias(new BigDecimal(100)).usuario(user1).build(),
-        RegistroCalorico.builder().tipo(Tipo.EXERCICIO).descricao("Arroz").data(LocalDate.now())
-            .calorias(new BigDecimal(100)).usuario(user1).build(),
-        RegistroCalorico.builder().tipo(Tipo.EXERCICIO).descricao("Arroz").data(LocalDate.now())
-            .calorias(new BigDecimal(100)).usuario(user1).build(),
-        RegistroCalorico.builder().tipo(Tipo.EXERCICIO).descricao("Arroz").data(LocalDate.now())
-            .calorias(new BigDecimal(100)).usuario(user1).build(),
+      
 
         // Registros Caloricos da Maria
 
